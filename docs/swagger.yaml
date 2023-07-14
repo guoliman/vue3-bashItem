@@ -1,0 +1,283 @@
+basePath: /api
+definitions:
+  loginMethod.AuthError:
+    properties:
+      code:
+        example: 1001
+        type: integer
+      message:
+        example: 认证错误
+        type: string
+    type: object
+  loginMethod.LoginOut:
+    properties:
+      code:
+        example: 200
+        type: integer
+      data:
+        example: success
+        type: string
+      msg:
+        example: "null"
+        type: string
+    type: object
+  loginMethod.SwagLogin:
+    properties:
+      code:
+        example: 200
+        type: integer
+      data:
+        additionalProperties:
+          type: string
+        example:
+          Token: eyJhbGciOiCI6IkpXVCJ9
+        type: object
+      msg:
+        example: "null"
+        type: string
+    type: object
+  testExampleConf.Data:
+    properties:
+      id:
+        example: 1
+        format: int64
+        type: integer
+      name:
+        example: gavin
+        type: string
+      title:
+        example: Object data
+        type: string
+      uuid:
+        example: 550e8400-e29b-41d4-a716-446655440000
+        format: uuid
+        type: string
+    type: object
+  testExampleConf.HTTPError:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: status bad request
+        type: string
+    type: object
+  testExampleConf.HTTPSuccess:
+    properties:
+      code:
+        example: 200
+        type: integer
+      data:
+        additionalProperties:
+          type: string
+        example:
+          Token: eyJhbGciOiCI6IkpXVCJ9
+        type: object
+      msg:
+        example: "null"
+        type: string
+    type: object
+  testExampleConf.Response:
+    properties:
+      map_data:
+        additionalProperties:
+          type: string
+        example:
+          key: value
+          key2: value2
+        type: object
+      object:
+        $ref: '#/definitions/testExampleConf.Data'
+      title:
+        additionalProperties:
+          type: string
+        example:
+          en: Map
+          kk: Карталар
+          ru: Карта
+        type: object
+    type: object
+host: localhost:8095
+info:
+  contact: {}
+  description: lplsoc是go基础模板
+  license:
+    name: Apache 2.01
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: lplsoc Example Api
+  version: v1.0
+paths:
+  /account/login:
+    post:
+      consumes:
+      - application/json
+      description: login接口详情介绍
+      parameters:
+      - description: post传参
+        in: body
+        name: dataInfo
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/loginMethod.SwagLogin'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/loginMethod.AuthError'
+      summary: login接口
+      tags:
+      - accountGroup
+  /account/logout:
+    delete:
+      consumes:
+      - application/json
+      description: 用户退出接口
+      parameters:
+      - description: '传token 例: Bearer eyJhbGzI1...ciOiJIU'
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/loginMethod.LoginOut'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/loginMethod.AuthError'
+      summary: 用户退出登录
+      tags:
+      - accountGroup
+  /account/testLogin:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: '传token 例: Bearer eyJhbGzI1...ciOiJIU'
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/loginMethod.LoginOut'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/loginMethod.AuthError'
+      summary: 用户登录验证
+      tags:
+      - accountGroup
+  /account/userInfo:
+    get:
+      consumes:
+      - application/json
+      description: 详情
+      parameters:
+      - description: '传token 例: Bearer eyJhbGzI1...ciOiJIU'
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/loginMethod.LoginOut'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/loginMethod.AuthError'
+      summary: 获取用户信息
+      tags:
+      - accountGroup
+  /swag/aa/bb:
+    get:
+      consumes:
+      - application/json
+      description: bb接口详情介绍
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/testExampleConf.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/testExampleConf.HTTPError'
+      summary: bb接口
+      tags:
+      - gavin
+  /swag/aa/cc:
+    get:
+      consumes:
+      - application/json
+      description: cc接口详情介绍
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: answer--
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/testExampleConf.HTTPError'
+        "404":
+          description: 404报错
+        "500":
+          description: 500报错
+      summary: cc接口
+      tags:
+      - gavin
+  /swag/loginAA:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 用于用户认证--接口详情介绍
+      parameters:
+      - description: 学号
+        in: formData
+        name: stu_id
+        required: true
+        type: string
+      - description: 密码
+        in: formData
+        name: password
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/testExampleConf.HTTPSuccess'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/testExampleConf.HTTPError'
+        "500":
+          description: 未找到此用户
+      summary: 登录接口 ---接口说明
+      tags:
+      - bb
+swagger: "2.0"

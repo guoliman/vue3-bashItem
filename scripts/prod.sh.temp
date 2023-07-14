@@ -1,0 +1,35 @@
+#!/bin/bash
+nowTime=`date  +'%Y%m%d-%H%M%S'`      # 当前时间
+#连接服务器
+rootUser="root"                       # 远端用户
+rootIp="1.*.*.11"                # 远端主机ip
+rootPort="22"                         # 远端主机端口
+rootPass="aaa"                   # 远端主机密码
+connectHost="sshpass -p ${rootPass} ssh ${rootUser}@${rootIp} -p ${rootPort}" #连接主机命令
+
+localPath="/Users/guoliman/Desktop/1yong/item/goItem/vue3-bashItem" # 本地路径
+package="vue3-bashItem"                  # 包名
+distDir='/app/backend'              # 服务器nginx放dist路径
+backupDir="${distDir}/backup"       # 远端备份路径
+logsDir="${distDir}/logs"           # 远端log路径
+configsDir="${distDir}/configs"     # 远端配置目录
+updateFile="${distDir}/updateFile"  # 远端上传文件功能的目录
+
+
+
+# 打包
+cd ${localPath}
+rm -rf ./${package}*
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ${package} -x main.go  # 编译
+tar -zcvf ${package}.tgz ${package}
+
+# 部署
+${connectHost} "mkdir -p  {${backupDir},${logsDir},${configsDir},${updateFile}}"     #创建目录
+echo "正在上传部署文件，请稍后。。。"
+sshpass -p ${rootPass} scp ${package}.tgz ${rootUser}@${rootIp}:${distDir} # 传包
+${connectHost} "cd ${distDir}; mv ${package} ${backupDir}/${package}_${nowTime}" # 备份
+${connectHost} "cd ${distDir}; tar -zxf ${package}.tgz;rm ${package}.tgz"  # 部署
+# # docker-compose启动服务
+serverName="deployInfo" #docker-compose启动的服务名
+${connectHost} "cd ${distDir}; docker-compose stop ${serverName}; docker-compose rm -f ${serverName}"
+${connectHost} "cd ${distDir}; docker-compose up -d ${serverName};docker-compose ps ${serverName};"

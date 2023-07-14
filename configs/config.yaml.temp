@@ -1,0 +1,45 @@
+# 项目信息
+Server:
+  RunMode: debug  # 只有2个参数 debug: gin信息全部输出 release: gin信息只输出error信息 和 日志模块输出等级无关
+  Port: 8089
+  ReadTimeout: 100
+  WriteTimeout: 60
+
+Database:
+  User: root
+  Password: 4wRxxmgCT4w==
+#  Host: 192.168.148.198 #127.0.0.1
+  Host: 127.0.0.1
+  Port: 13306
+  Name: test
+  #TablePrefix: vue3-bashItem_  # 建表时 表名加前缀 例 创建aa表时创建成vue3-bashItem_aa表
+  TablePrefix:  # 建表时 表名不加前缀
+
+Redis:
+  Host: 127.0.0.1:16379
+  Password: admin_1234
+  DB: 14           # 第15库 0-15   #select 15
+  MaxIdle: 10      # 最大空闲连接数
+  MaxActive: 100   # 一个pool所能分配的最大的连接数目, 当设置成0的时候，该pool连接数没有限制
+  IdleTimeout: 60  # 空闲连接超时时间，超过超时时间的空闲连接会被关闭, 设0永不关闭
+
+
+LogConf:
+  Level: debug                  # 日志级别  debug info error  若设置info 则不会输出debug 只会输出info及以上等级
+  Filename: ./logs/service.log  # 日志路径及文件名称
+  MaxSize: 100                  # 日志文件最大大小(MB)
+  MaxBackups: 10                # 保留旧文件最大数量
+  MaxAge: 30                    # 保留旧文件最长天数
+
+JwtConf:
+  JwtKey: 3!gw6zf^3neerf5&   # jwt秘钥
+  JwtTime: 48
+
+DefaultRoute:
+  - Path: /api/authAdmin/users/logout  # 退出
+    UrlType: DELETE
+  - Path: /api/authAdmin/users/me      # 用户信息
+    UrlType: GET
+  - Path: /api/authAdmin/menus/routes  # 动态路由
+    UrlType: GET
+
