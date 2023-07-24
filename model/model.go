@@ -243,11 +243,6 @@ func GetPageListWithFields(results interface{}, fields string, offset, limit int
 	return baseGetList(results, fields, offset, limit, order, true, query, args...)
 }
 
-//func GetAll(results interface{}) error {
-//	_, err := baseGetList(results, "", 0, 0, "", false, nil)
-//	return err
-//}
-
 func GetAllWithFields(results interface{}, fields string) error {
 	_, err := baseGetList(results, fields, 0, 0, "", false, nil)
 	return err
@@ -255,7 +250,7 @@ func GetAllWithFields(results interface{}, fields string) error {
 
 //=============================查询=======================================
 
-// 取值的count
+// Count 取值的个数
 //menuConut,menuConutErr := model.Count(&accountModel.Menu{}, "menu_id = ? AND menu_id IN ?", menuMdl.MenuId, roleInt)
 func Count(instance interface{}, query interface{}, args ...interface{}) (int64, error) {
 	var count int64
@@ -353,7 +348,7 @@ func GetListPage(results interface{}, offset, limit int, order string, query int
 	return countData, nil
 }
 
-// 新增数据
+// Create 新增数据
 //item := &domainConf.AccountUsage{
 //	AliasBigClass:   requestBody.AliasBigClass,
 //	AliasName:       requestBody.AliasName,
@@ -362,7 +357,6 @@ func GetListPage(results interface{}, offset, limit int, order string, query int
 //	response.BaseError(c, fmt.Sprintf("insert 创建AccountUsage失败，DB创建数据错误：%v", err.Error()))
 //	return
 //}
-
 func Create(instance interface{}) error {
 	return Db.Create(instance).Error
 }
@@ -377,13 +371,12 @@ func UpdateOneById(model interface{}, updates interface{}, idKey string, idValue
 	return Update(model, updates, fmt.Sprintf("`%v` = ?", idKey), idValue)
 }
 
-// 更新 多条件更新
+// Update 更新 多条件更新
 //updateData := map[string]interface{}{"Type": updateMenu.Type, "Icon": updateMenu.Icon,}
 //if err := model.Update(&accountModel.Menu{}, updateData,"`menu_id` = ?  AND age =?", u.Id,u.Age); err != nil {
 //	response.BaseError(c, fmt.Sprintf("update更新权限失败，DB数据更新错误：%v", err.Error()))
 //return
 //}
-
 func Update(model interface{}, updates interface{}, query interface{}, args ...interface{}) error {
 	return Db.Model(model).Where(query, args...).Updates(updates).Error
 }
