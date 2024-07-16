@@ -92,10 +92,10 @@
 
 ## 初始化数据库
 ```
-默认配置文件  
+本地 默认配置文件  
 go run main.go -mode=migrate #=可去掉
 
-指定配置文件  
+线上 指定配置文件  
 ./vue3-bashItem -c configs/prodConfig.yaml -mode=migrate
   
 ```
