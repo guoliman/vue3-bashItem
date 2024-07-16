@@ -34,11 +34,11 @@ var Db *gorm.DB
 
 func Setup() {
 	mysqlPass, deErr := aesEncryption.DePwdCode(settings.DatabaseSetting.Password)
+	//logger.Logger.Info(fmt.Sprintf("===%s",mysqlPass))
 	if deErr != nil {
 		errData := fmt.Sprintf("mysqlPass解密报错: %v", zap.Error(deErr))
 		logger.FileLogger.Error(errData)
 		panic(errData)
-		//os.Exit(1)
 	}
 
 	var err error
@@ -49,7 +49,6 @@ func Setup() {
 		settings.DatabaseSetting.Host,
 		settings.DatabaseSetting.Port,
 		settings.DatabaseSetting.Name)
-
 	// db log
 	loggerLevel := gormLogger.Error
 	if settings.ServerSetting.RunMode == "debug" {

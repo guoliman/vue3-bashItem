@@ -7,11 +7,11 @@ Server:
 
 Database:
   User: root
-  Password: 4wRxxmgCT4w==
+  Password: 4wRxxmgCT4DxNq1VUI8Urw==
 #  Host: 192.168.148.198 #127.0.0.1
   Host: 127.0.0.1
   Port: 13306
-  Name: test
+  Name: youlai_boot
   #TablePrefix: vue3-bashItem_  # 建表时 表名加前缀 例 创建aa表时创建成vue3-bashItem_aa表
   TablePrefix:  # 建表时 表名不加前缀
 
@@ -32,10 +32,14 @@ LogConf:
   MaxAge: 30                    # 保留旧文件最长天数
 
 JwtConf:
-  JwtKey: 3!gw6zf^3neerf5&   # jwt秘钥
-  JwtTime: 48
+  JwtKey: 3!gw6zf^3gGYay0nP0Htp@jemneerf5&   # jwt秘钥
+  JwtTime: 48           # jwt过期时间 单位小时 如果改单位，要改2个地方 jwt.go的27行time.Hour改单位 和loginApi.go的72行改redis超时数
 
+
+# 默认路由 不验证权限 类型：切片里是map # DefaultRoute:[{Path:"/api/aa",UrlType: "GET"},{Path:"/api/BB",UrlType: "POST"}]
 DefaultRoute:
+   #  - Path: /api/account/AA  # 这url假的 表述可以写多个列表
+   #    UrlType: POST  # # GET POST PUT DELETE PATCH
   - Path: /api/authAdmin/users/logout  # 退出
     UrlType: DELETE
   - Path: /api/authAdmin/users/me      # 用户信息
