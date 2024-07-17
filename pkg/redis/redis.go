@@ -1,10 +1,10 @@
 package redis
 
 import (
-	"vue3-bashItem/pkg/settings"
 	"encoding/json"
 	"github.com/gomodule/redigo/redis"
 	"time"
+	"vue3-bashItem/pkg/settings"
 )
 
 var RedisPool *redis.Pool
@@ -19,6 +19,8 @@ func Setup() {
 			if err != nil {
 				return nil, err
 			}
+
+			//
 			if settings.RedisSetting.Password != "" {
 				if _, err = c.Do("AUTH", settings.RedisSetting.Password); err != nil {
 					c.Close()
@@ -36,12 +38,6 @@ func Setup() {
 			return err
 		},
 	}
-}
-
-func Ping() error {
-	conn := RedisPool.Get()
-	_, err := conn.Do("PING")
-	return err
 }
 
 // Set 无过期时间
@@ -65,7 +61,7 @@ func Set(key string, data interface{}) error {
 
 }
 
-// SetEx 有过期时间  redisGo.SetAndEx("aa","a1111","20") //20秒超时
+// SetEx 有过期时间  redisGo.SetAndEx("aa","a1111","20") //20秒超时 -1是永久存在
 func SetAndEx(key string, data interface{}, Ex string) error {
 	conn := RedisPool.Get()
 	if err := conn.Err(); err != nil {

@@ -102,13 +102,13 @@ go run main.go -mode=migrate #=可去掉
   
 ```
 
-## 本地启动
+## 服务启动
 ```
-本地
-go run main.go
-  
-线上 
-cd /backend/ && ./vue3-bashItem -c ./configs/prodConfig.yaml
+本地默认启动           go run main.go
+
+本地指定配置文件启动    go run main.go -c=/Users/aa/vue3-bashItem/configs/config.yaml
+
+线上启动               cd /backend/ && ./vue3-bashItem -c ./configs/prodConfig.yaml
 ```
 
 ## 编译+上线部署

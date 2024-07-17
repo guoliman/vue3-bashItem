@@ -7,7 +7,7 @@ Server:
 
 Database:
   User: root
-  Password: 4wRxxmgCT4DxNq1VUI8Urw==
+  Password: 4wRxxmgCT4DxNq1VUI8Urw==   # 这是加密后的密码
 #  Host: 192.168.148.198 #127.0.0.1
   Host: 127.0.0.1
   Port: 13306

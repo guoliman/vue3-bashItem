@@ -90,13 +90,16 @@ func runServer() {
 // @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
 
 // 可选多种请求方式
-//// @schemes http https
+// // @schemes http https
 func main() {
 	var itemConfigFile string
 
 	sysVersion := runtime.GOOS // 获取系统类型
+	log.Printf("系统：%v", sysVersion)
 	if sysVersion == "linux" {
 		itemConfigFile = "./configs/prodConfig.yaml"
+	} else if sysVersion == "windows" {
+		itemConfigFile = ".\\configs\\testConfig.yaml"
 	} else {
 		itemConfigFile = "./configs/testConfig.yaml"
 	}
@@ -105,12 +108,6 @@ func main() {
 	flag.StringVar(&mode, "mode", "server", "运行模式,运行server服务或者执行migrate.")
 	flag.StringVar(&confPath, "c", itemConfigFile, "配置文件路径.")
 	flag.Parse()
-
-	// 初始化数据库(默认配置文件)  go run main.go -mode=migrate 或者 go run main.go -mode migrate
-	// 初始化数据库 指定配置文件  ./vue3-bashItem -c configs/prodConfig.yaml -mode=migrate
-
-	// 启动服务(默认配置文件)     go run main.go
-	// 启动服务(指定配置文件)     go run main.go -c=/Users/aa/vue3-bashItem/configs/config.yaml
 
 	if mode != "server" && mode != "migrate" {
 		log.Fatal("run 参数非法: 运行模式只能选择 server 或 migrate") // FAtal 服务不会继续执行了
