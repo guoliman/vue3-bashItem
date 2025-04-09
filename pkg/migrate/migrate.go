@@ -39,7 +39,7 @@ func MigrateTable() {
 		panic(migrateErr)
 	} else {
 		migrateInfo := "\n====================migrate table success===================="
-		logger.Logger.Info(migrateInfo)
+		// logger.Logger.Info(migrateInfo)
 		logger.FileLogger.Info(migrateInfo)
 	}
 

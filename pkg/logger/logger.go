@@ -1,12 +1,13 @@
 package logger
 
 import (
+	"log"
+	"os"
 	"vue3-bashItem/pkg/settings"
+
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
-	"log"
-	"os"
 )
 
 var Logger *zap.Logger
@@ -17,6 +18,7 @@ func Setup() {
 	InitFileLogger()
 }
 
+// 初始化控制台日志
 func InitConselLogger() {
 	encoder := getEncoder("console")
 	var l zapcore.Level
@@ -31,15 +33,23 @@ func InitConselLogger() {
 	Logger = zap.New(core, zap.AddCaller())
 }
 
+// 初始化文件日志及控制台日志
 func InitFileLogger() {
 	writeSyncer := getLogWriter()
+	consoleSyncer := zapcore.AddSync(os.Stdout) // 控制台输出,不需要就禁用-1
 	encoder := getEncoder("json")
 	var l = new(zapcore.Level)
 	err := l.UnmarshalText([]byte(settings.LogConfSetting.Level))
 	if err != nil {
 		log.Fatalf("create logger failed!: %v", err)
 	}
-	core := zapcore.NewCore(encoder, writeSyncer, l)
+
+	// 使用 NewTee 组合文件和控制台输出
+	core := zapcore.NewTee(
+		zapcore.NewCore(encoder, writeSyncer, l),   // 写入文件
+		zapcore.NewCore(encoder, consoleSyncer, l), // 控制台输出，不需要就禁用-2
+	)
+
 	fl := zap.New(core, zap.AddCaller())
 	FileLogger = fl.Sugar()
 }

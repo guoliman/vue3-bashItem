@@ -17,7 +17,7 @@ func CheckPorts(serverName string, ip_port string) {
 		panic(errorData) // 主动异常退出
 	} else {
 		if conn != nil {
-			logger.Logger.Info("探活成功")
+			// logger.Logger.Info("探活成功")
 			logger.FileLogger.Info("探活成功")
 			conn.Close()
 		} else {

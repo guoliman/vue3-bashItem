@@ -1,41 +1,37 @@
-# Binaries for programs and plugins
+# 忽略默认文件
 *.exe
 *.exe~
 *.dll
 *.so
 *.dylib
-
-# Test binary, built with `go test -c`
+*.swp
 *.test
-
-# Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+*.tgz
+*.tar
 
-# Dependency directories (remove the comment below to include it)
-# vendor/
-
-# idea
+# 忽略根下目录
 .idea/
-# vscode
+.git/
 .vscode/
+# updateFile/deployInfo/  # 忽略上传目录
 
-# 忽略配置文件
-configs/*.yaml
+# 忽略根下文件
+vue3-bashItem*   # 忽略打包成功的二进制
+controller/test  # 忽略测试文件
 
-# 忽略打包成功的二进制
-vue3-bashItem
-vue3-bashItem.exe
-vue3-bashItem.tgz
-# 忽略所有日志文件
-*.log
 
-# 忽略上传部署脚本
-**/scripts/*.sh
-#scripts/*.sh
+# 忽略all目录下文件
+**/*.sh
+**/*.log
+**/*.yaml
 
-# 忽略上传目录及文件
-updateFile/deployInfo/
+# 取消忽略(忽略根下config目录下全部，但保留test.yaml文件（组合）） 
+/config/*
+!config/test.yaml
 
-# 忽略测试文件
-controller/test/
+
+
+
+
 

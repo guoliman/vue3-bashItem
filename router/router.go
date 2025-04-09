@@ -1,16 +1,16 @@
 package router
 
 import (
-	ginzap "github.com/gin-contrib/zap"
+	// ginzap "github.com/gin-contrib/zap"
 	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	"time"
+	// "time"
 	menuAdmin "vue3-bashItem/controller/accountAdminApi/menuApi"
 	roleAdmin "vue3-bashItem/controller/accountAdminApi/roleApi"
 	"vue3-bashItem/controller/example/testExample"
 	"vue3-bashItem/middleware"
-	"vue3-bashItem/pkg/logger"
+	// "vue3-bashItem/pkg/logger"
 	"vue3-bashItem/pkg/settings"
 
 	"vue3-bashItem/controller/accountAdminApi/deptApi"
@@ -23,7 +23,7 @@ func InitRouter() *gin.Engine {
 	r := gin.New()                              // 生成引擎
 
 	//  ========中间件 生效在路由前==========
-	r.Use(ginzap.Ginzap(logger.Logger, time.RFC3339, true)) // log中间件  终端输出信息
+	// r.Use(ginzap.Ginzap(logger.Logger, time.RFC3339, true)) // log中间件  终端自动出去请求日志
 	r.Use(middleware.Cors())                                // 跨域
 	r.Use(middleware.Recovery())                            // recovery中间件 异常报错，服务不会崩溃
 	r.Use(middleware.RequestId())                           // request id中间件   + 日志进入请求显示

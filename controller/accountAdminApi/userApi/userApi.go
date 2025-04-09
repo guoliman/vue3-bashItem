@@ -112,7 +112,8 @@ func Login(c *gin.Context) {
 	// 密码加密
 	passJm, passErr := aesEncryption.EnPwdCode([]byte(userInfo.Password))
 	if passErr != nil {
-		logger.Logger.Error(fmt.Sprintf("用户密码加密报错：%s", passErr))
+		// logger.Logger.Error(fmt.Sprintf("用户密码加密报错：%s", passErr))
+		logger.FileLogger.Error(fmt.Sprintf("用户密码加密报错：%s", passErr))
 	}
 	//logger.FileLogger.Debug(fmt.Sprintf("密码：%v   加密后密码%v", userInfo.Password, passJm))
 

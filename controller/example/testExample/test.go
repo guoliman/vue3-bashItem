@@ -4,6 +4,7 @@ import (
 	"vue3-bashItem/pkg/logger"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"fmt"
 )
 
 /* ============如下 写在任意目录都行 不需要引用会自动引用=============
@@ -53,6 +54,7 @@ func LoginBB(c *gin.Context) {
 // @Tags        gavin
 // @Router      /swag/aa/bb [get]
 func Helloworld(g *gin.Context) {
+	logger.FileLogger.Info(fmt.Sprintf("Request X-Request-Id: %v", g.Request.Header.Get("X-Request-Id")))
 	logger.FileLogger.Debug("Helloworld=====")
 	g.JSON(http.StatusOK, "helloworld------")
 }
@@ -69,5 +71,7 @@ func Helloworld(g *gin.Context) {
 // @Router      /swag/aa/cc [get]
 func Bb(g *gin.Context) {
 	logger.FileLogger.Info("Bb=====")
+	// panic(errors.New("some error message"))
+	panic("123")
 	g.JSON(http.StatusOK, "Bb------")
 }

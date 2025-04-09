@@ -51,7 +51,7 @@ func runServer() {
 		//	zap.Int("Port", settings.ServerSetting.Port),
 		//	)
 		listenInfo := fmt.Sprintf("Service start Success 0.0.0.0:%v", settings.ServerSetting.Port)
-		logger.Logger.Info(listenInfo)
+		// logger.Logger.Info(listenInfo)
 		logger.FileLogger.Info(listenInfo)
 		if err := s.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			errData := fmt.Sprintf("Server Start Error: %v", zap.Error(err))
@@ -63,7 +63,7 @@ func runServer() {
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt)
 	<-quit
-	logger.Logger.Info("Shutdown Server ... ")
+	// logger.Logger.Info("Shutdown Server ... ")
 	logger.FileLogger.Info("Shutdown Server ... ")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second) //N秒后停止服务
@@ -74,7 +74,7 @@ func runServer() {
 		logger.Logger.Error(errData)
 		os.Exit(1)
 	}
-	logger.Logger.Info("Server Shutdown.")
+	// logger.Logger.Info("Server Shutdown.")
 	logger.FileLogger.Info("Server Shutdown.")
 }
 
